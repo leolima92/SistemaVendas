@@ -17,3 +17,4 @@ target/
 
 # Ignorar o arquivo de configuração do banco de dados
 src/db.properties
+out/db.properties
