@@ -43,7 +43,7 @@ public class Pedido {
         System.out.println();
     }
 
-    // === GETTERS & SETTERS NECESSÁRIOS ===
+   
 
     public int getId() {
         return id;
