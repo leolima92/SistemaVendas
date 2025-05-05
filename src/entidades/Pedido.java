@@ -6,6 +6,7 @@ import java.util.List;
 import pagamento.FormaPagamento;
 
 public class Pedido {
+    private int id;
     private Cliente cliente;
     private LocalDate data;
     private List<ItemPedido> itens;
@@ -41,4 +42,39 @@ public class Pedido {
         System.out.println("Total: R$" + getTotal());
         System.out.println();
     }
+
+   
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public FormaPagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
 }

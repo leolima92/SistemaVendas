@@ -1,30 +1,35 @@
 package servicos;
 
+import dao.ClienteDAO;
+import dao.ProdutoDAO;
+import dao.PedidoDAO;
+
 import entidades.*;
 import pagamento.FormaPagamento;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SistemaVendas {
-    private List<Produto> produtos = new ArrayList<>();
-    private List<Cliente> clientes = new ArrayList<>();
-    private List<Pedido> pedidos = new ArrayList<>();
+    private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
 
     public void cadastrarProduto(String nome, double preco, int estoque, boolean promocao, double desconto) {
-        produtos.add(new Produto(nome, preco, estoque, promocao, desconto));
+        Produto produto = new Produto(nome, preco, estoque, promocao, desconto);
+        produtoDAO.salvar(produto);
     }
 
     public void cadastrarCliente(String nome, String email) {
-        clientes.add(new Cliente(nome, email));
+        Cliente cliente = new Cliente(nome, email);
+        clienteDAO.salvar(cliente);
     }
 
     public Produto buscarProduto(String nome) {
-        return produtos.stream().filter(p -> p.getNome().equalsIgnoreCase(nome)).findFirst().orElse(null);
+        return produtoDAO.buscarPorNome(nome);
     }
 
     public Cliente buscarCliente(String nome) {
-        return clientes.stream().filter(c -> c.getNome().equalsIgnoreCase(nome)).findFirst().orElse(null);
+        return clienteDAO.buscarPorNome(nome);
     }
 
     public void realizarPedido(String nomeCliente, List<ItemPedido> itens, FormaPagamento pagamento) {
@@ -39,20 +44,16 @@ public class SistemaVendas {
             pedido.adicionarItem(item.getProduto(), item.getQuantidade());
         }
 
-        pedidos.add(pedido);
-        pedido.exibirResumo();
+
+        pedidoDAO.salvar(pedido);
     }
 
-    public void listarProdutos() {
-        System.out.println("Produtos cadastrados:");
-        for (Produto p : produtos) {
-            String infoPromocao = p.isPromocao() ? " (Promoção: " + (int)(p.getDesconto() * 100) + "%)" : "";
-            System.out.println("- " + p.getNome() + " | R$" + p.getPreco() + " | Estoque: " + p.getEstoque() + infoPromocao);
-        }
-        System.out.println();
+    public List<Produto> listarProdutos() {
+        return produtoDAO.listarTodos();
     }
 
     public void listarPedidos() {
+        List<Pedido> pedidos = pedidoDAO.listarTodos();
         System.out.println("Pedidos realizados:");
         for (Pedido p : pedidos) {
             p.exibirResumo();

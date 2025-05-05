@@ -1,4 +1,3 @@
-import entidades.Cliente;
 import entidades.ItemPedido;
 import entidades.Produto;
 import pagamento.FormaPagamento;
@@ -66,7 +65,15 @@ public class Main {
                     break;
 
                 case 3:
-                    sistema.listarProdutos();
+                    List<Produto> produtos = sistema.listarProdutos();
+                    if (produtos.isEmpty()) {
+                        System.out.println("Nenhum produto cadastrado.");
+                    } else {
+                        for (Produto p : produtos) {
+                            String promoMsg = p.isPromocao() ? " (Promoção: " + (int)(p.getDesconto() * 100) + "%)" : "";
+                            System.out.printf("- %s | R$ %.2f | Estoque: %d%s\n", p.getNome(), p.getPreco(), p.getEstoque(), promoMsg);
+                        }
+                    }
                     break;
 
                 case 4:
