@@ -1,0 +1,20 @@
+# Ignorar toda a pasta .idea (configuração local do IntelliJ)
+.idea/
+
+# Ignorar arquivos de configuração temporária
+*.iml
+/shelf/
+/httpRequests/
+/mavenHomeManager.xml
+/dataSources/
+/dataSources.local.xml
+
+# Ignorar arquivos de build (caso crie futuramente)
+out/
+build/
+target/
+*.class
+
+# Ignorar o arquivo de configuração do banco de dados
+src/db.properties
+out/db.properties
